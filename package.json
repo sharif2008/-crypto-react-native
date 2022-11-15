@@ -11,8 +11,10 @@
   "dependencies": {
     "expo": "~45.0.0",
     "expo-random": "~12.2.0",
+    "expo-secure-store": "~11.2.0",
     "expo-splash-screen": "~0.15.1",
     "expo-status-bar": "~1.3.0",
+    "expo-updates": "~0.13.4",
     "hex-lite": "^1.5.0",
     "isomorphic-webcrypto": "^2.3.8",
     "keypair": "^1.0.4",

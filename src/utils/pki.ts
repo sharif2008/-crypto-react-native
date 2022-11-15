@@ -78,7 +78,7 @@ export const createKeypair = (count: Number) => {
     // generate an RSA key pair synchronously
     // *NOT RECOMMENDED*: Can be significantly slower than async and may block
     // JavaScript execution. Will use native Node.js 10.12.0+ API if possible.
-    var keypair: forge.pki.KeyPair = rsa.generateKeyPair(2048);
+    var keypair: forge.pki.KeyPair = rsa.generateKeyPair(1024);
 
     // generate an RSA key pair asynchronously(uses web workers if available)
     // use workers: -1 to run a fast core estimator to optimize # of workers
@@ -124,7 +124,11 @@ export const createKeypair = (count: Number) => {
     // sign data using RSASSA-PSS where PSS uses a SHA-1 hash, a SHA-1 based
     // masking function MGF1, and a 20 byte salt
 
-    console.log("key generated end- " + count)
+    console.log("key generated end- ")
+    let privateKeyPem = forge.pki.privateKeyToPem(privateKey);
+    console.log(privateKeyPem);
+
+    return privateKeyPem;
 }
 export const createCSR = () => {
     var keys = forge.pki.rsa.generateKeyPair(1024);

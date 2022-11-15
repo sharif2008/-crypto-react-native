@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "gosign-test",
-    "slug": "gosign-test",
+    "name": "react-native-crypto",
+    "slug": "react-native-crypto",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.sharif2008.gosigntest"
+      "package": "com.sharif2008.rncrypto"
     },
     "web": {
       "favicon": "./assets/favicon.png"

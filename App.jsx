@@ -1,22 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { createCSR, createKeypair, createKeyPairRSA, keypair, keypairWC } from './src/utils/pki';
+import { StyleSheet, Text, View, TextInput, Alert, Button } from 'react-native';
+import { createKeypair } from './src/utils/pki';
+import * as SecureStore from 'expo-secure-store';
+import { useState } from 'react';
 
 export default function App() {
-  let i = 0;
+
+  const privateKey = "privKey";
 
   const onPressButton = async () => {
-    console.log('button pressed')
+    console.log('Key button pressed')
+    const keyVal = createKeypair();
+    save(privateKey, keyVal);
+    alert('Key is generated');
+  }
+  async function save(key, value) {
+    try {
+      await SecureStore.setItemAsync(key, value, { requireAuthentication: true, authenticationPrompt: "Please enter fingerprint", keychainAccessible: SecureStore.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY });
+      //getValueFor(key)
+    } catch (error) {
+      alert(error.message)
+    }
 
-    createCSR(++i);
   }
 
+  async function getValueFor(key) {
+    try {
+      let result = await SecureStore.getItemAsync(key);
+      if (result) {
+        alert(result);
+      } else {
+        alert('No values stored under that key.');
+      }
+    } catch (error) {
+      alert(error.message)
+    }
+
+  }
   return (
     <View style={styles.container}>
-      <Button title='New Key Generation' color="#841584" style={styles.btn}
-        accessibilityLabel="Learn more about this purple button" onPress={onPressButton} />
-      <Text></Text>
-      <Button title='Test Alive' style={styles.btn} onPress={() => { alert("hi") }} />
+      <View style={styles.inputRow}>
+        <Button title='New Key Generation' color='red' style={styles.btn} onPress={onPressButton} />
+      </View>
+      <View style={styles.inputRow}>
+        <Button style={styles.btn}
+          title="View Private Key"
+          onPress={() => {
+            getValueFor(privateKey);
+          }}
+        />
+      </View>
     </View>
   );
 }
@@ -29,7 +62,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   btn: {
+    width: "100%",
+    height: 50,
+    borderRadius: 5,
+    justifyContent: "center",
+    fontSize: 30,
+    alignContent: "stretch",
+    backgroundColor: "red",
+
+  },
+  inputRow: {
     margin: 20,
-    padding: 10
-  }
+    flexDirection: "row",
+  },
+  paragraph: {},
+  textInput: {}
 });
